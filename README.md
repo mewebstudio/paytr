@@ -1,5 +1,10 @@
 ## PayTR ödeme sistemi için PHP kütüphanesi (PHP 7.1.3+) 
 
+###Kurulum:
+```bash
+composer install mews/paytr
+```
+
 Örnek kullanım, `example` dizini içerisindedir.
 ```php
 $payment = new Mews\PayTr\Payment();
