@@ -66,31 +66,11 @@ class Payment
      */
     public function __construct(?array $config = [])
     {
-        if (!$config) {
-            $config = $this->getDefaultConfigParams();
+        if ($config) {
+            $this->setConfig(new Config($config));
         }
 
-        $this->setConfig(
-            (new Config())
-                ->setApiUrl($config['apiUrl'])
-                ->setMerchantId($config['merchantId'])
-                ->setMerchantKey($config['merchantKey'])
-                ->setMerchantSalt($config['merchantSalt'])
-                ->setSuccessUrl($config['successUrl'])
-                ->setFailUrl($config['failUrl'])
-        );
-
         $this->client = new CurlHttpClient();
-    }
-
-    /**
-     * Get config
-     *
-     * @return array
-     */
-    protected function getDefaultConfigParams(): array
-    {
-        return require __DIR__ . '/../config/paytr.php';
     }
 
     /**

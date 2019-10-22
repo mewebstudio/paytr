@@ -62,6 +62,34 @@ class Order
     private $phone = null;
 
     /**
+     * Order constructor.
+     * @param array|null $order
+     */
+    public function __construct(?array $order = [])
+    {
+        if ($order) {
+            $this
+                ->setId($order['id'])
+                ->setAmount((float)$order['amount'])
+                ->setCurrency($order['TL'])
+                ->setBasket($order['basket'])
+                ->setIp($order['id'])
+                ->setEmail($order['email'])
+                ->setName($order['name'])
+                ->setAddress($order['address'])
+                ->setPhone($order['phone']);
+
+            if (isset($order['noInstallment'])) {
+                $this->setNoInstallment($order['noInstallment']);
+            }
+
+            if (isset($order['maxInstallment'])) {
+                $this->setMaxInstallment($order['maxInstallment']);
+            }
+        }
+    }
+
+    /**
      * @return string
      */
     public function getId(): string

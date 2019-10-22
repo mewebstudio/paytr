@@ -36,6 +36,19 @@ class Config
      */
     private $failUrl;
 
+    public function __construct(?array $config = [])
+    {
+        if ($config) {
+            $this
+                ->setApiUrl($config['apiUrl'])
+                ->setMerchantId($config['merchantId'])
+                ->setMerchantKey($config['merchantKey'])
+                ->setMerchantSalt($config['merchantSalt'])
+                ->setSuccessUrl($config['successUrl'])
+                ->setFailUrl($config['failUrl']);
+        }
+    }
+
     /**
      * @return string
      */

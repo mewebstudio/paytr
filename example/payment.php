@@ -16,7 +16,10 @@ if (Request::METHOD_POST != $request->getMethod()) {
     die;
 }
 
-$payment = new Mews\PayTr\Payment();
+$payment = new Mews\PayTr\Payment(
+    require __DIR__ . '/../config/paytr.php'
+);
+
 $payment
     ->setDebug(true)
     ->setTestMode(true);
