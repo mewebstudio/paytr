@@ -1,6 +1,6 @@
-# PayTR ödeme sistemi için PHP kütüphanesi (PHP 7.1.3+) 
+#PayTR ödeme sistemi için PHP kütüphanesi (PHP 7.1.3+) 
 
-##Kurulum:
+Kurulum:
 ```bash
 composer install mews/paytr
 ```
