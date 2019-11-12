@@ -270,7 +270,8 @@ class Payment
     private function prepare(): void
     {
         $this->setHash($this->generateHash());
-        $this->setPostData([
+
+        $data = [
             'merchant_id' => $this->config->getMerchantId(),
             'user_ip' => $this->order->getIp(),
             'merchant_oid' => $this->order->getId(),
@@ -288,8 +289,13 @@ class Payment
             'merchant_fail_url' => $this->config->getSuccessUrl(),
             'timeout_limit' => $this->config->getSuccessUrl(),
             'currency' => $this->order->getCurrency(),
-            'test_mode' => $this->isDebug(),
-        ]);
+        ];
+
+        if ($this->isTestMode()) {
+            $data['test_mode'] = true;
+        }
+
+        $this->setPostData($data);
     }
 
     /**
@@ -301,7 +307,6 @@ class Payment
     public function make(): self
     {
         $this->prepare();
-
         $request = $this->client->request('POST', $this->config->getApiUrl(), [
             'timeout' => 20,
             'body' => $this->getPostData(),
