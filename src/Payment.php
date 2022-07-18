@@ -286,8 +286,8 @@ class Payment
             'user_address' => $this->order->getAddress(),
             'user_phone' => $this->order->getPhone(),
             'merchant_ok_url' => $this->config->getSuccessUrl(),
-            'merchant_fail_url' => $this->config->getSuccessUrl(),
-            'timeout_limit' => $this->config->getSuccessUrl(),
+            'merchant_fail_url' => $this->config->getFailUrl(),
+            'timeout_limit' => $this->getTimeOutLimit(),
             'currency' => $this->order->getCurrency(),
         ];
 
@@ -308,7 +308,7 @@ class Payment
     {
         $this->prepare();
         $request = $this->client->request('POST', $this->config->getApiUrl(), [
-            'timeout' => 20,
+            'timeout' => $this->getTimeOutLimit(),
             'body' => $this->getPostData(),
         ]);
 
