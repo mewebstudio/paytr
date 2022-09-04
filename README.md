@@ -2,7 +2,7 @@
 
 Kurulum:
 ```bash
-composer install mews/paytr
+composer require mews/paytr
 ```
 
 Örnek kullanım, `example` dizini içerisindedir.
