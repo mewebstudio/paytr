@@ -62,9 +62,9 @@ class Order
     private $phone = null;
 
     /**
-     * @var string|null
+     * @var bool
      */
-    private $paymentType = null;
+    private $isTransfer = false;
 
     /**
      * Order constructor.
@@ -84,8 +84,8 @@ class Order
                 ->setAddress($order['address'])
                 ->setPhone($order['phone']);
 
-            if (isset($order['paymentType'])) {
-                $this->setPaymentType($order['paymentType']);
+            if (isset($order['isTransfer'])) {
+                $this->setTransfer($order['isTransfer']);
             }
 
             if (isset($order['noInstallment'])) {
@@ -194,9 +194,9 @@ class Order
      * @return $this
      */
     
-    public function setPaymentType(string $paymentType): self
+    public function setTransfer(bool $isTransfer): self
     {
-        $this->paymentType = $paymentType;
+        $this->isTransfer = $isTransfer;
 
         return $this;
     }
@@ -205,9 +205,9 @@ class Order
      * @return string
      */
 
-    public function getPaymentType(): string
+    public function isTransfer(): bool
     {
-        return $this->paymentType;
+        return $this->isTransfer;
     }
 
     /**
