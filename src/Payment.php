@@ -179,6 +179,16 @@ class Payment
             $this->order->getAddress();
             $this->order->getPhone();
 
+            if ( $this->order->isTransfer() ) {
+                return $this->config->getMerchantId() .
+                    $this->order->getIp() .
+                    $this->order->getId() .
+                    $this->order->getEmail() .
+                    $this->order->getFormattedAmount() .
+                    'eft' .
+                    $this->isTestMode();
+            }
+
             return $this->config->getMerchantId() .
                 $this->order->getIp() .
                 $this->order->getId() .
@@ -271,13 +281,17 @@ class Payment
     {
         $this->setHash($this->generateHash());
 
-        $data = [
+        $standartData = [
             'merchant_id' => $this->config->getMerchantId(),
             'user_ip' => $this->order->getIp(),
             'merchant_oid' => $this->order->getId(),
             'email' => $this->order->getEmail(),
-            'payment_amount' => $this->order->getFormattedAmount(),
+            'payment_amount' => $this->order->getFormattedAmount()
+        ];
+
+        $data = array_merge($standartData, [
             'paytr_token' => $this->getHashToken(),
+            'test_mode' => $this->isTestMode(),
             'user_basket' => $this->order->getFormattedBasket(),
             'debug_on' => $this->isDebug(),
             'no_installment' => $this->order->getNoInstallment(),
@@ -289,10 +303,23 @@ class Payment
             'merchant_fail_url' => $this->config->getFailUrl(),
             'timeout_limit' => $this->getTimeOutLimit(),
             'currency' => $this->order->getCurrency(),
-        ];
-
-        if ($this->isTestMode()) {
-            $data['test_mode'] = true;
+        ]);
+        
+        if ( $this->order->isTransfer() ) {
+            $data = array_merge($standartData, [
+                'payment_type' => 'eft',
+                'paytr_token' => $this->getHashToken(),
+                'test_mode' => $this->isTestMode(),
+                'user_basket' => $this->order->getFormattedBasket(),
+                'debug_on' => $this->isDebug(),
+                'no_installment' => $this->order->getNoInstallment(),
+                'max_installment' => $this->order->getMaxInstallment(),
+                'user_phone' => $this->order->getPhone(),
+                'merchant_ok_url' => $this->config->getSuccessUrl(),
+                'merchant_fail_url' => $this->config->getFailUrl(),
+                'timeout_limit' => $this->getTimeOutLimit(),
+                'currency' => $this->order->getCurrency(),
+            ]);
         }
 
         $this->setPostData($data);
