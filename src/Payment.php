@@ -184,6 +184,7 @@ class Payment
                 $this->order->getId() .
                 $this->order->getEmail() .
                 $this->order->getFormattedAmount() .
+                $this->order->getPaymentType() ?? '' .
                 $this->order->getFormattedBasket() .
                 $this->order->getNoInstallment() .
                 $this->order->getMaxInstallment() .
@@ -290,6 +291,10 @@ class Payment
             'timeout_limit' => $this->getTimeOutLimit(),
             'currency' => $this->order->getCurrency(),
         ];
+
+        if ( $this->order->getPaymentType() ) {
+            $data['payment_type'] = $this->order->getPaymentType();
+        }
 
         if ($this->isTestMode()) {
             $data['test_mode'] = true;

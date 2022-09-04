@@ -62,6 +62,11 @@ class Order
     private $phone = null;
 
     /**
+     * @var string|null
+     */
+    private $paymentType = null;
+
+    /**
      * Order constructor.
      * @param array|null $order
      */
@@ -78,6 +83,10 @@ class Order
                 ->setName($order['name'])
                 ->setAddress($order['address'])
                 ->setPhone($order['phone']);
+
+            if (isset($order['paymentType'])) {
+                $this->setPaymentType($order['paymentType']);
+            }
 
             if (isset($order['noInstallment'])) {
                 $this->setNoInstallment($order['noInstallment']);
@@ -179,6 +188,26 @@ class Order
         $this->basket = $basket;
 
         return $this;
+    }
+    
+    /**
+     * @return $this
+     */
+    
+    public function setPaymentType(string $paymentType): self
+    {
+        $this->paymentType = $paymentType;
+
+        return $this;
+    }
+
+    /**
+     * @return string
+     */
+
+    public function getPaymentType(): string
+    {
+        return $this->paymentType;
     }
 
     /**
