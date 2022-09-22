@@ -23,7 +23,7 @@ class Payment
     /**
      * @var int
      */
-    private $timeOutLimit = 1;
+    private $timeOutLimit = 30;
 
     /**
      * @var bool
