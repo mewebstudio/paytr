@@ -62,6 +62,11 @@ class Order
     private $phone = null;
 
     /**
+     * @var bool
+     */
+    private $isTransfer = false;
+
+    /**
      * Order constructor.
      * @param array|null $order
      */
@@ -78,6 +83,10 @@ class Order
                 ->setName($order['name'])
                 ->setAddress($order['address'])
                 ->setPhone($order['phone']);
+
+            if (isset($order['isTransfer'])) {
+                $this->setTransfer($order['isTransfer']);
+            }
 
             if (isset($order['noInstallment'])) {
                 $this->setNoInstallment($order['noInstallment']);
@@ -179,6 +188,26 @@ class Order
         $this->basket = $basket;
 
         return $this;
+    }
+    
+    /**
+     * @return $this
+     */
+    
+    public function setTransfer(bool $isTransfer): self
+    {
+        $this->isTransfer = $isTransfer;
+
+        return $this;
+    }
+
+    /**
+     * @return string
+     */
+
+    public function isTransfer(): bool
+    {
+        return $this->isTransfer;
     }
 
     /**
