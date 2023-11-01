@@ -186,7 +186,7 @@ class Payment
                     $this->order->getEmail() .
                     $this->order->getFormattedAmount() .
                     'eft' .
-                    $this->isTestMode();
+                    ($this->isTestMode() ? "1" : "0");
             }
 
             return $this->config->getMerchantId() .
@@ -198,7 +198,7 @@ class Payment
                 $this->order->getNoInstallment() .
                 $this->order->getMaxInstallment() .
                 $this->order->getCurrency() .
-                $this->isTestMode();
+                ($this->isTestMode() ? "1" : "0");
         } catch (TypeError $e) {
             throw new InvalidOrderDataException($e->getMessage());
         }
